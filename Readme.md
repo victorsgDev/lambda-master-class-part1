@@ -1,8 +1,44 @@
-### Lambda Master class - part 1
+# FUNCTIONAL INTERFACES @FunctionalInterface:
+## Consumer<T>: 
 
-This is the examples used in the talk we made with Stuart Marks (@StuartMarks) at Devoxx Belgium 2018. 
+    Recibe un argumento pero no retorna nada.
+    
+   - Método funcional:
+    
+    void accept(T t);
+    
+   - Método default: 
+    
+    default Consumer<T> andThen(Consumer<T> other) {
+          return (T t) -> { this.accept(t); other.accept(t);};
+    }
+ 
+ ## Predicate<T>: 
+  
+    Recibe un argumento y retorna un boolean.
+    
+   -  Método funcional:
+    
+    boolean test(T t);
+    
+   -  Métodos default:
+    
+    default Predicate<T> negate() {
+        return t -> !this.test(t);        
+    }
+    
+    default Predicate<T> and(Predicate<T> other) {
+        Objects.requireNonNull(other);        
+        return t -> this.test(t) && other.test(t);      
+    }
 
-The talk is available on YouTube: https://youtu.be/ePXnCezwRuw and the slides are on Slideshare: https://www.slideshare.net/jpaumard/lambda-and-stream-master-class-part-1
-
-You can can see the code exercises without the solutions on this commit: https://github.com/JosePaumard/lambda-master-class-part1/releases/tag/Examples_without_solutions
-
+    default Predicate<T> or(Predicate<T> other) {    
+        Objects.requireNonNull(other);        
+        return t -> this.test(t) || other.test(t);        
+    }
+    
+    default Predicate<T> isEqual(Object targetRef){        
+        return (null == targetRef)
+                ? Objects::isNull
+                : object -> targetRef.equals(object);    
+    }
