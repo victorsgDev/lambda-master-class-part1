@@ -47,19 +47,19 @@
 
     Recibe dos argumentos y retorna un int.
     
-    - Método funcional:
+   - Método funcional:
     
-        int compare(T t1, T t2);
+    int compare(T t1, T t2);
       
-    - Métodos:
+   - Métodos:
     
-        static <T, U extends Comparable<? super U>> Comparator<T> comparing(Function<T, U> keyExtractor) {
-            Objects.requireNonNull(keyExtractor);
-            return (p1, p2) -> {
-                U u1 = keyExtractor.apply(p1);
-                U u2 = keyExtractor.apply(p2);
-                return u1.compareTo(u2);
-            };
-        }
+    static <T, U extends Comparable<? super U>> Comparator<T> comparing(Function<T, U> keyExtractor) {
+         Objects.requireNonNull(keyExtractor);
+         return (p1, p2) -> {
+             U u1 = keyExtractor.apply(p1);
+             U u2 = keyExtractor.apply(p2);
+             return u1.compareTo(u2);
+         };
+     }
     
         
